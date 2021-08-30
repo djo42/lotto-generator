@@ -136,5 +136,7 @@ Sub lotto()
     
     Set y = Nothing
     Set z = Nothing
+    Set ws = Nothing
+    Set sheetname = vbNullString
    
 End Sub
