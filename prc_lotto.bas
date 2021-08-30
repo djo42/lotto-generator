@@ -7,15 +7,15 @@ Sub lotto()
     Dim namePart As String
     Dim wb As Workbook
     Dim ws As Variant
+    Dim c As Long
     Dim e As Range
-    Dim n As Long
-    Dim m As Long
-    Dim t As Long
     Dim i As Long
+    Dim m As Long
+    Dim n As Long
+    Dim r As Long
+    Dim t As Long
     Dim y As New Collection
     Dim z As New Collection
-    Dim r As Long
-    Dim c As Long
     Dim item As Variant
      
     Set wb = ThisWorkbook
