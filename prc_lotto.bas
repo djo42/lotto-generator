@@ -26,7 +26,10 @@ Sub lotto()
 
     ws.Name = Left(LCase(sheetName), 16)
     
+    'n is the count of numbers to be chosen from the number set
     n = wb.Sheets("GameData").Range("A2").Value
+
+    'm is the number set size
     m = wb.Sheets("GameData").Range("B2").Value
     
     For i = 1 To m
@@ -83,7 +86,8 @@ Sub lotto()
             If t = n Then
                
                 ws.Sort.SortFields.Clear
-                ws.Sort.SortFields.Add2 Key:=Range(Cells(i + 1, 2), Cells(i + 1, t + 1)), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortTextAsNumbers
+                ws.Sort.SortFields.Add2 Key:=Range(Cells(i + 1, 2), Cells(i + 1, t + 1)), _ 
+                SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortTextAsNumbers
                 
                 With ws.Sort
                     .SetRange Range(Cells(i + 1, 2), Cells(i + 1, t + 1))
@@ -139,22 +143,7 @@ Sub lotto()
 End Sub
 
 
-Function GUID$(Optional lowercase As Boolean, Optional parens As Boolean)
-    Dim k&, h$
-    GUID = Space(36)
-    For k = 1 To Len(GUID)
-        Randomize
-        Select Case k
-            Case 9, 14, 19, 24: h = "-"
-            Case 15:            h = "4"
-            Case 20:            h = Hex(Rnd * 3 + 8)
-            Case Else:          h = Hex(Rnd * 15)
-        End Select
-        Mid$(GUID, k, 1) = h
-    Next
-    If lowercase Then GUID = LCase$(GUID)
-    If parens Then GUID = "{" & GUID & "}"
-End Function
+
 
 
 
