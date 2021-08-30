@@ -141,29 +141,3 @@ Sub lotto()
     Set z = Nothing
    
 End Sub
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
