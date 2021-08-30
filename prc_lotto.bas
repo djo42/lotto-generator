@@ -107,16 +107,13 @@ Sub lotto()
                 e.FormatConditions.AddUniqueValues
                 e.FormatConditions(e.FormatConditions.Count).SetFirstPriority
                 e.FormatConditions(1).DupeUnique = xlDuplicate
-                With e.FormatConditions(1).Font
-                    .Color = -16383844
-                    .TintAndShade = 0
-                End With
-                With e.FormatConditions(1).Interior
-                    .PatternColorIndex = xlAutomatic
-                    .Color = 13551615
-                    .TintAndShade = 0
-                End With
-                
+                With e.FormatConditions(1)
+                    .Font.Color = -16383844
+                    .Font.TintAndShade = 0
+                    .Interior.PatternColorIndex = xlAutomatic
+                    .Interior.Color = 13551615
+                    .Interior.TintAndShade = 0
+                End With                
             End If
         
         Next
