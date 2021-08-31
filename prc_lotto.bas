@@ -3,7 +3,6 @@ Option Explicit
 
 Sub lotto()
 
-    Dim sheetName, namePart As String
     Dim wb As Workbook
     Dim ws, gd As Worksheet
     Dim item As Variant
@@ -14,12 +13,11 @@ Sub lotto()
     Set wb = ThisWorkbook
     Set gd = Sheets(1)
     
-    sheetName = GUID(True, False)
 
     Set ws = wb.Sheets.Add(After:= _
         wb.Sheets(wb.Sheets.Count))
 
-    ws.Name = Left(LCase(sheetName), 16)
+    ws.Name = Left(GUID(True, False), 8)
     
     'n is the count of numbers to be
     'chosen from the number set
@@ -125,7 +123,6 @@ Sub lotto()
     Set z = Nothing
     Set ws = Nothing
     Set gd = Nothing
-    sheetName = vbNullString
    
 End Sub
 
