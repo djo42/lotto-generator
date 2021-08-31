@@ -1,7 +1,7 @@
 Attribute VB_Name = "fct_guid"
 Option Explicit
 
-'Below function found on https://newbedev.com/excel-vba-generate-guid-uuid-code-example 
+'Below function found on https://newbedev.com/excel-vba-generate-guid-uuid-code-example
 
 Function GUID$(Optional lowercase As Boolean, Optional parens As Boolean)
     Dim k&, h$

@@ -3,22 +3,17 @@ Option Explicit
 
 Sub lotto()
 
-    Dim sheetName As String
-    Dim namePart As String
+    Dim sheetName, namePart As String
     Dim wb As Workbook
-    Dim ws As Variant
-    Dim c As Long
+    Dim ws, gd, item As Variant
+    Dim c, i, m, n, r, t As Long
     Dim e As Range
-    Dim i As Long
-    Dim m As Long
-    Dim n As Long
-    Dim r As Long
-    Dim t As Long
     Dim y As New Collection
     Dim z As New Collection
-    Dim item As Variant
      
     Set wb = ThisWorkbook
+    Set gd = Sheets(1)
+    
     sheetName = GUID(True, False)
 
     Set ws = wb.Sheets.Add(After:= _
@@ -26,18 +21,15 @@ Sub lotto()
 
     ws.Name = Left(LCase(sheetName), 16)
     
-    'n is the count of numbers to be chosen from the number set
-    n = wb.Sheets("GameData").Range("A2").Value
+    'n is the count of numbers to be
+    'chosen from the number set
+    n = gd.Range("A2").Value
 
     'm is the number set size
-    m = wb.Sheets("GameData").Range("B2").Value
+    m = gd.Range("B2").Value
     
     For i = 1 To m
-    
-        With z
-            .Add CStr(i), CStr(i)
-        End With
-    
+        z.Add CStr(i), CStr(i)
     Next
     
     Application.ScreenUpdating = False
@@ -53,15 +45,11 @@ Sub lotto()
             If z.Count < n And y.Count = 0 Then
             
                 For c = 1 To m
-                    With y
-                        .Add CStr(c), CStr(c)
-                    End With
+                    y.Add CStr(c), CStr(c)
                 Next
                 
                 For Each item In z
-                    With y
-                        y.Remove (item)
-                    End With
+                    y.Remove (item)
                 Next
 
             End If
@@ -69,10 +57,9 @@ Sub lotto()
             If z.Count = 0 Then
                 Set z = Nothing
                 Set z = y
-                                
             End If
             
-            Randomize (Rnd * Now())
+            Randomize (Rnd * Now() + 1.0365 * 10)
             
             r = WorksheetFunction.RoundUp((Rnd * z.Count), 0)
 
@@ -81,12 +68,12 @@ Sub lotto()
             z.Remove (r)
             
             If t = n Then
-               
-                ws.Sort.SortFields.Clear
-                ws.Sort.SortFields.Add2 Key:=Range(Cells(i + 1, 2), Cells(i + 1, t + 1)), _ 
-                SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortTextAsNumbers
                 
                 With ws.Sort
+                    .SortFields.Clear
+                    .SortFields.Add2 Key:=Range(Cells(i + 1, 2), _
+                    Cells(i + 1, t + 1)), SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, DataOption:=xlSortTextAsNumbers
                     .SetRange Range(Cells(i + 1, 2), Cells(i + 1, t + 1))
                     .Header = xlNo
                     .MatchCase = False
@@ -103,14 +90,16 @@ Sub lotto()
    
                 e.FormatConditions.AddUniqueValues
                 e.FormatConditions(e.FormatConditions.Count).SetFirstPriority
-                e.FormatConditions(1).DupeUnique = xlDuplicate
+                
                 With e.FormatConditions(1)
+                    .DupeUnique = xlDuplicate
                     .Font.Color = -16383844
                     .Font.TintAndShade = 0
                     .Interior.PatternColorIndex = xlAutomatic
                     .Interior.Color = 13551615
                     .Interior.TintAndShade = 0
-                End With                
+                End With
+                
             End If
         
         Next
@@ -126,13 +115,18 @@ Sub lotto()
         .Columns("A:Z").AutoFit
     End With
     
-    Worksheets("GameData").Activate
+    gd.Activate
     
     Application.ScreenUpdating = True
     
     Set y = Nothing
     Set z = Nothing
     Set ws = Nothing
-    Set sheetname = vbNullString
+    Set gd = Nothing
+    sheetName = vbNullString
    
 End Sub
+
+
+
+
