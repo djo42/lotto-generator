@@ -5,11 +5,11 @@ Sub lotto()
 
     Dim sheetName, namePart As String
     Dim wb As Workbook
-    Dim ws, gd, item As Variant
+    Dim ws, gd As Worksheet
+    Dim item As Variant
     Dim c, i, m, n, r, t As Long
     Dim e As Range
-    Dim y As New Collection
-    Dim z As New Collection
+    Dim y, z As Collection
      
     Set wb = ThisWorkbook
     Set gd = Sheets(1)
@@ -28,8 +28,10 @@ Sub lotto()
     'm is the number set size
     m = gd.Range("B2").Value
     
+    Set y = New Collection
+    
     For i = 1 To m
-        z.Add CStr(i), CStr(i)
+        y.Add CStr(i), CStr(i)
     Next
     
     Application.ScreenUpdating = False
@@ -38,41 +40,41 @@ Sub lotto()
     
         Cells(i + 1, 1).Value = "Tipp " & i
         
-        Set y = Nothing
+        Set z = New Collection
         
         For t = 1 To n
                
-            If z.Count < n And y.Count = 0 Then
+            If y.Count < n And z.Count = 0 Then
             
                 For c = 1 To m
-                    y.Add CStr(c), CStr(c)
+                    z.Add CStr(c), CStr(c)
                 Next
                 
-                For Each item In z
-                    y.Remove (item)
+                For Each item In y
+                    z.Remove (item)
                 Next
 
             End If
             
-            If z.Count = 0 Then
-                Set z = Nothing
-                Set z = y
+            If y.Count = 0 Then
+                Set y = Nothing
+                Set y = z
             End If
             
             Randomize (Rnd * Now() + 1.0365 * 10)
             
-            r = WorksheetFunction.RoundUp((Rnd * z.Count), 0)
+            r = WorksheetFunction.RoundUp((Rnd * y.Count), 0)
 
-            ws.Cells(i + 1, t + 1).Value = z.item(r)
+            ws.Cells(i + 1, t + 1).Value = y.item(r)
 
-            z.Remove (r)
+            y.Remove (r)
             
             If t = n Then
                 
                 With ws.Sort
                     .SortFields.Clear
                     .SortFields.Add2 Key:=Range(Cells(i + 1, 2), _
-                    Cells(i + 1, t + 1)), SortOn:=xlSortOnValues, _
+                        Cells(i + 1, t + 1)), SortOn:=xlSortOnValues, _
                     Order:=xlAscending, DataOption:=xlSortTextAsNumbers
                     .SetRange Range(Cells(i + 1, 2), Cells(i + 1, t + 1))
                     .Header = xlNo
@@ -126,6 +128,7 @@ Sub lotto()
     sheetName = vbNullString
    
 End Sub
+
 
 
 
