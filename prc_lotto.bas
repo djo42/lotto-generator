@@ -72,15 +72,12 @@ Sub lotto()
                                 
             End If
             
-            Debug.Print (Rnd * Now())
             Randomize (Rnd * Now())
             
             r = WorksheetFunction.RoundUp((Rnd * z.Count), 0)
 
-            With ws
-                .Cells(i + 1, t + 1).Value = z.item(r)
-                
-            End With
+            ws.Cells(i + 1, t + 1).Value = z.item(r)
+
             z.Remove (r)
             
             If t = n Then
@@ -119,7 +116,6 @@ Sub lotto()
         Next
         
     DoEvents
-
     Next
     
     With ws
